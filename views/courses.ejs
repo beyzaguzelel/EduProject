@@ -4,7 +4,7 @@
 
   <%- include('partials/_navigation') -%>
 
-    
+  
   <section class="heading-page header-text" id="top">
     <div class="container">
       <div class="row">
@@ -52,7 +52,7 @@
                         <h6>Nov <span>12</span></h6>
                       </div>
                       <a href="/courses/<%= courses[i].slug %>"><h4><%= courses[i].name %></h4></a>
-                      <p><%= courses[i].description %></p>
+                      <p><%= courses[i].description.substring(0,100) + "..." %></p>
                     </div>
                   </div>
                 </div>

@@ -30,7 +30,7 @@
                       <!-- ***** Menu Start ***** -->
                       <ul class="nav">
                           <li><a href="/">Home</a></li>
-                          <li><a href="/">Apply Now</a></li>
+                          <li><a href="/courses" class="active">Courses</a></li> 
                           <li class="has-sub">
                               <a href="javascript:void(0)">Pages</a>
                               <ul class="sub-menu">
@@ -38,8 +38,17 @@
                                   <li><a href="#">Meeting Details</a></li>
                               </ul>
                           </li>
-                          <li><a href="/courses" class="active">Courses</a></li> 
+                          
                           <li><a href="/">Contact Us</a></li> 
+                          <% if(!userIN) { %> 
+                            <li><a href="/register">Register</a></li>
+                          <% } %>
+
+                          <% if(userIN) { %>  
+                          <li><a href="/users/dashboard">Dashboard</a></li>
+                          <li><a href="/users/logout">Logout</a></li>
+                          <% } %>
+
                       </ul>        
                       <a class='menu-trigger'>
                           <span>Menu</span>
