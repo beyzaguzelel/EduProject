@@ -9,40 +9,33 @@ exports.createCourse = async (req, res)=> {
             description: req.body.description,
             category: req.body.category,
             user: req.session.userID
-          });
-   
+        });
+
+        req.flash("success", `${course.name} has been created successfully`);
         res.status(201).redirect('/courses');
         
     }catch(error){
-        res.status(400).json({
-            status: 'fail',
-            error,
-        });
+      req.flash("error", `Something happened!`);
+      res.status(400).redirect('/courses');
     }
 };
 
 exports.getAllCourses = async (req, res)=> {
     try{
+        const categorySlug = req.query.categories;
 
-    const categorySlug = req.query.categories;
+        const category = await Category.findOne({slug:categorySlug})
+        
+        let filter = {};
+        if(categorySlug) {filter = {category:category._id}}
+        const courses= await Course.find(filter).sort('-createdAt').populate('user');
 
-    const category = await Category.findOne({slug:categorySlug})
+        const categories= await Category.find();
 
-    
-    let filter = {};
-    if(categorySlug) {filter = {category:category._id}}
-    const courses= await Course.find(filter).sort('-createdAt');
-
-    const categories= await Category.find();
-
-   
         res.status(200).render('courses',{
             courses,
             categories
-
-
-        })
-            
+        })             
     }catch(error){
         res.status(400).json({
             status: 'fail',
@@ -55,13 +48,11 @@ exports.getCourse = async (req, res)=> {
     try{
       const user=await User.findById(req.session.userID);
       const course = await Course.findOne({slug: req.params.slug}).populate('user');
-      
+
         res.status(200).render('course',{
             course,
             user
-
-        })
-            
+        })            
     }catch(error){
         res.status(400).json({
             status: 'fail',
@@ -101,3 +92,37 @@ exports.releaseCourse = async (req, res) => {
     }
   };
   
+  exports.deleteCourse = async (req, res) => {
+    try {     
+      const course = await Course.findOneAndRemove({slug:req.params.slug})
+  
+      req.flash("error", `${course.name} has been removed successfully`);  
+      res.status(200).redirect('/users/dashboard');
+  
+    } catch (error) {
+      res.status(400).json({
+        status: 'fail',
+        error,
+      });
+    }
+  };
+
+  exports.updateCourse = async (req, res) => {
+    try {    
+  
+      const course = await Course.findOne({slug:req.params.slug});
+      course.name = req.body.name;
+      course.description = req.body.description;
+      course.category = req.body.category;
+  
+      course.save();
+  
+      res.status(200).redirect('/users/dashboard');
+  
+    } catch (error) {
+      res.status(400).json({
+        status: 'fail',
+        error,
+      });
+    }
+  };

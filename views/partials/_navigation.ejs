@@ -30,17 +30,10 @@
                       <!-- ***** Menu Start ***** -->
                       <ul class="nav">
                           <li><a href="/">Home</a></li>
-                          <li><a href="/courses" class="active">Courses</a></li> 
-                          <li class="has-sub">
-                              <a href="javascript:void(0)">Pages</a>
-                              <ul class="sub-menu">
-                                  <li><a href="#">Upcoming Meetings</a></li>
-                                  <li><a href="#">Meeting Details</a></li>
-                              </ul>
-                          </li>
-                          
-                          <li><a href="/">Contact Us</a></li> 
+                          <li><a href="/courses" class="active">Courses</a></li>                      
+                          <li><a href="#contact">Contact Us</a></li> 
                           <% if(!userIN) { %> 
+                            <li><a href="/login">Login</a></li>
                             <li><a href="/register">Register</a></li>
                           <% } %>
 

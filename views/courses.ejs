@@ -9,8 +9,7 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
-          <h6>Here are our upcoming meetings</h6>
-          <h2>Upcoming Meetings</h2>
+          <h6>Here are our courses</h6>
         </div>
       </div>
     </div>
@@ -21,17 +20,25 @@
       <div class="row">
         <div class="col-lg-12">
           <div class="row">
+            <% if (flashMessages) { %>
+              <% if (flashMessages.success) { %>
+                <div class="alert alert-success">
+              <%= flashMessages.success %>
+              </div>
+            <% } else if (flashMessages.error) { %>
+             <div class="alert alert-danger">
+              <%= flashMessages.error %>
+              </div>
+              <% } %>
+            <% } %>
             <div class="col-lg-12">
               <div class="filters">
               
                 <ul>
                   <li class="active"><a href="/courses">All Courses</a></li>
-                  <% for (let i=0; i< categories.length; i++) { %>
-                    
-                    
+                  <% for (let i=0; i< categories.length; i++) { %>     
                     <li><a href="/courses?categories=<%= categories[i].slug %>"><%= categories[i].name %></a></li>
-                  <% } %>
-               
+                  <% } %>           
                 </ul>
               </div>
             </div>
@@ -49,18 +56,19 @@
                     </div>
                     <div class="down-content">
                       <div class="date">
-                        <h6>Nov <span>12</span></h6>
+                        <h6>Nov <span>12</span></h6>                      
                       </div>
-                      <a href="/courses/<%= courses[i].slug %>"><h4><%= courses[i].name %></h4></a>
-                      <p><%= courses[i].description.substring(0,100) + "..." %></p>
+
+                      <a href="/courses/<%= courses[i].slug %>"><h4><%= courses[i].name %></h4> </a>               
+                      <p><%= courses[i].description.substring(0,100) + "..." %></p>                    
+                      <p style="text-align: right;"><%= courses[i].user.name %></p>                     
                     </div>
-                  </div>
+                 </div>
                 </div>
-                <% } %>
-                
-             
+                <% } %>       
               </div>
             </div>
+
             <div class="col-lg-12">
               <div class="pagination">
                 <ul>

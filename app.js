@@ -3,6 +3,7 @@ const ejs = require('ejs');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const flash = require('connect-flash');
+const methodOverride=require('method-override');
 const MongoStore = require('connect-mongo');
 const pageRoute=require('./routes/pageRoute');
 const courseRoute=require('./routes/courseRoute');
@@ -22,7 +23,6 @@ mongoose.connect('mongodb://localhost/edu-db',{
 });
 
 
-
 app.set("view engine", "ejs");
 
 global.userIN = null;
@@ -31,6 +31,11 @@ global.userIN = null;
 app.use(express.static('public'));
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
+app.use(
+  methodOverride('_method', {
+    methods: ['POST', 'GET'],
+  })
+);
 
 app.use(
   session({
